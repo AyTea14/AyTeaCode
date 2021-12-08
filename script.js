@@ -38,11 +38,13 @@ const initCodeEditor = () => {
 const initLangSelector = () => {
     select = new SlimSelect({
         select: "#language",
-        data: CodeMirror.modeInfo.map((e) => ({
-            text: e.name,
-            value: shorten(e.name),
-            data: { mime: e.mime, mode: e.mode },
-        })),
+        data: CodeMirror.modeInfo
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((e) => ({
+                text: e.name,
+                value: shorten(e.name),
+                data: { mime: e.mime, mode: e.mode },
+            })),
         showContent: "down",
         onChange: (e) => {
             const language = e.data || { mime: null, mode: null };
