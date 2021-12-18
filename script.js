@@ -16,17 +16,15 @@ const init = () => {
 };
 
 const initCodeEditor = () => {
-    CodeMirror.modeURL = "https://cdn.jsdelivr.net/npm/codemirror@5.58.1/mode/%N/%N.js";
+    CodeMirror.modeURL = "https://cdn.jsdelivr.net/npm/codemirror@5.64.0/mode/%N/%N.js";
     editor = new CodeMirror(byId("editor"), {
         lineNumbers: true,
-        theme: "dracula",
+        theme: "monokai",
         readOnly: readOnly,
         lineWrapping: false,
-        scrollbarStyle: "simple",
+        scrollbarStyle: "overlay",
     });
-    if (readOnly) {
-        document.body.classList.add("readonly");
-    }
+    if (readOnly) document.body.classList.add("readonly");
 
     statsEl = byId("stats");
     editor.on("change", () => {
@@ -38,6 +36,7 @@ const initCodeEditor = () => {
 const initLangSelector = () => {
     select = new SlimSelect({
         select: "#language",
+        showContent: "down",
         data: CodeMirror.modeInfo
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((e) => ({
@@ -45,7 +44,6 @@ const initLangSelector = () => {
                 value: shorten(e.name),
                 data: { mime: e.mime, mode: e.mode },
             })),
-        showContent: "down",
         onChange: (e) => {
             const language = e.data || { mime: null, mode: null };
             editor.setOption("mode", language.mime);
@@ -163,10 +161,8 @@ const openInNewTab = () => {
 const buildUrl = (rawData, mode) => {
     const base = `${location.protocol}//${location.host}${location.pathname}`;
     const query = shorten("Plain Text") === select.selected() ? "" : `?l=${encodeURIComponent(select.selected())}`;
-    const url = base + query + "#" + rawData;
-    if (mode === "markdown") {
-        return `[AyTeaCode snippet](${url})`;
-    }
+    const url = base + query + "&readonly#" + rawData;
+    if (mode === "markdown") return `[AyTeaCode snippet](${url})`;
     if (mode === "iframe") {
         const height = editor["doc"].height + 45;
         return `<iframe width="100%" height="${height}" frameborder="0" src="${url}"></iframe>`;
@@ -188,9 +184,7 @@ const decompress = (base64, cb) => {
                 progressBar.style.width = "0";
                 cb(result, err);
             },
-            (progress) => {
-                progressBar.style.width = 100 * progress + "%";
-            }
+            (progress) => (progressBar.style.width = 100 * progress + "%")
         );
     };
     req.send();
@@ -220,9 +214,7 @@ const compress = (str, cb) => {
             };
             reader.readAsDataURL(new Blob([new Uint8Array(compressed)]));
         },
-        (progress) => {
-            progressBar.style.width = 100 * progress + "%";
-        }
+        (progress) => (progressBar.style.width = 100 * progress + "%")
     );
 };
 
@@ -239,20 +231,17 @@ const slugify = (str) =>
 const shorten = (name) => {
     let n = slugify(name).replace("script", "-s").replace("python", "py");
     const nov = (s) => s[0] + s.substr(1).replace(/[aeiouy-]/g, "");
-    if (n.replace(/-/g, "").length <= 4) {
-        return n.replace(/-/g, "");
-    }
-    if (n.split("-").length >= 2) {
+    if (n.replace(/-/g, "").length <= 4) return n.replace(/-/g, "");
+    if (n.split("-").length >= 2)
         return n
             .split("-")
             .map((x) => nov(x.substr(0, 2)))
             .join("")
             .substr(0, 4);
-    }
+
     n = nov(n);
-    if (n.length <= 4) {
-        return n;
-    }
+    if (n.length <= 4) return n;
+
     return n.substr(0, 2) + n.substr(n.length - 2, 2);
 };
 
@@ -284,8 +273,6 @@ const testAllModes = () => {
     }
 };
 
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
-}
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
 
 init();
