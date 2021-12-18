@@ -154,7 +154,7 @@ const enableLineWrapping = () => {
 };
 
 const openInNewTab = () => {
-    window.open(location.href.replace(/[?&]readonly/, ""));
+    window.open(location.href.replace(/[?&]readonly/, ""), "_self");
 };
 
 // Build a shareable URL
