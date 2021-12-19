@@ -134,11 +134,11 @@ const hideCopyBar = (success) => {
         copyBar.classList.add("hidden");
         return;
     }
-    copyButton.innerText = "Copied !";
+    copyButton.innerText = "Copied";
     setTimeout(() => {
         copyBar.classList.add("hidden");
         copyButton.innerText = "Copy";
-    }, 800);
+    }, 1200);
 };
 
 const disableLineWrapping = () => {

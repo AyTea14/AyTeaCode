@@ -30,16 +30,14 @@ footer {
 
 #progress {
     min-height: 3px;
-    background: #ff79c6;
+    background: #ccbccf;
     z-index: 15;
     width: 0;
 }
 
-@media screen and (min-width: 600px) {
-    body.readonly:not(:hover) #footer {
-        display: none;
-    }
-}
+/* body.readonly:not(:hover) #footer {
+    display: none;
+} */
 
 .hidden,
 select,
@@ -88,7 +86,7 @@ h1 {
     font-family: JetBrainsMono, sans-serif;
 }
 .pink {
-    color: #ff79c6;
+    color: #ccbccf;
 }
 
 /* Modals */
