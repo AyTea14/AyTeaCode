@@ -63,7 +63,9 @@ npm/microtip@0.2.2/microtip.min.css
             <div class="row align-items-center justify-content-end my-1">
                 <div class="col-auto mb-1">
                     <a href="https://code.aytea.ml"
-                        ><h1 class="my-0"><span>{</span> AyTeaCode <span>}</span></h1></a
+                        ><h1 class="my-0" style="user-select: none">
+                            <span>{</span><span class="pink"> AyTea</span>Code <span>}</span>
+                        </h1></a
                     >
                 </div>
                 <div class="col-auto">
@@ -74,6 +76,7 @@ npm/microtip@0.2.2/microtip.min.css
                         data-microtip-position="bottom"
                         role="tooltip"
                         data-micromodal-trigger="description-modal"
+                        style="user-select: none"
                         >About</a
                     >
                 </div>
@@ -104,12 +107,31 @@ npm/microtip@0.2.2/microtip.min.css
                         <span class="icon-wrap-text"></span>
                     </button>
                 </div>
-                <div class="col-auto">
-                    <button class="py-1 px-2 mx-0 my-1" onclick="generateLink('url')" type="button">Generate link</button>
-                    <button class="py-1 px-2 mx-1 my-1" onclick="generateLink('markdown')" type="button">
+                <div class="col-auto" style="user-select: none">
+                    <button
+                        class="py-1 px-2 mx-0 my-1"
+                        style="user-select: none"
+                        onclick="generateLink('url')"
+                        type="button"
+                    >
+                        Generate link
+                    </button>
+                    <button
+                        class="py-1 px-2 mx-1 my-1"
+                        style="user-select: none"
+                        onclick="generateLink('markdown')"
+                        type="button"
+                    >
                         Generate markdown
                     </button>
-                    <button class="py-1 px-2 mx-0 my-1" onclick="generateLink('iframe')" type="button">Embed</button>
+                    <button
+                        class="py-1 px-2 mx-0 my-1"
+                        style="user-select: none"
+                        onclick="generateLink('iframe')"
+                        type="button"
+                    >
+                        Embed
+                    </button>
                 </div>
             </div>
         </div>
@@ -118,7 +140,7 @@ npm/microtip@0.2.2/microtip.min.css
         <footer id="footer" class="shadow-top container-fluid" style="user-select: none">
             <div class="row my-1">
                 <div class="col mono hide-readonly" id="stats">Length: 0 | Lines: 1</div>
-                <div class="col mono show-readonly">Powered by AyTeaCode</div>
+                <div class="col mono show-readonly">Powered by <span class="pink"> AyTea</span>Code</div>
                 <div class="col-auto mono show-readonly">
                     <a href="javascript:void(0)" onclick="openInNewTab()">
                         <span class="icon-edit"></span>
