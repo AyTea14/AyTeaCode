@@ -30,7 +30,7 @@ footer {
 
 #progress {
     min-height: 3px;
-    background: #ccbccf;
+    background: #5398ff;
     z-index: 15;
     width: 0;
 }
@@ -86,7 +86,7 @@ h1 {
     font-family: JetBrainsMono, sans-serif;
 }
 .pink {
-    color: #ccbccf;
+    color: #5398ff;
 }
 
 /* Modals */
