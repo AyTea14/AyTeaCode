@@ -35,12 +35,17 @@ footer {
     width: 0;
 }
 
+@media screen and (min-width: 600px) {
+    body.readonly:not(:hover) #footer {
+        display: none;
+    }
+}
+
 .hidden,
 select,
-#copy:not(.hidden) + #controls,
 body.readonly .hide-readonly,
 body:not(.readonly) .show-readonly,
-body.readonly:not(:hover) #footer {
+#copy:not(.hidden) + #controls {
     display: none;
 }
 
