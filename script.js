@@ -161,7 +161,7 @@ const openInNewTab = () => {
 const buildUrl = (rawData, mode) => {
     const base = `${location.protocol}//${location.host}${location.pathname}`;
     const query = shorten("Plain Text") === select.selected() ? "" : `?l=${encodeURIComponent(select.selected())}`;
-    const url = base + query + "&readonly#" + rawData;
+    const url = `${base}${query ? `${query}&readonly#` : "?readonly#"}${rawData}`;
     if (mode === "markdown") return `[AyTeaCode snippet](${url})`;
     if (mode === "iframe") {
         const height = editor["doc"].height + 45;
