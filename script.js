@@ -19,7 +19,7 @@ const initCodeEditor = () => {
     CodeMirror.modeURL = "https://cdn.jsdelivr.net/npm/codemirror@5.64.0/mode/%N/%N.js";
     editor = new CodeMirror(byId("editor"), {
         lineNumbers: true,
-        theme: "monokai",
+        theme: "dracula",
         readOnly: readOnly,
         lineWrapping: false,
         scrollbarStyle: "overlay",
