@@ -59,10 +59,15 @@ body:not(.readonly) .show-readonly,
 .shadow-top {
     box-shadow: rgba(0, 0, 0, 0.15) 0 -3px 10px;
 }
+
+a:focus {
+    color: #aeceff;
+    outline: none;
+}
+
 a,
 a:hover,
-a:active,
-a:focus {
+a:active {
     color: #fff;
     outline: none;
 }
@@ -85,7 +90,7 @@ h1 {
 .mono {
     font-family: JetBrainsMono, sans-serif;
 }
-.pink {
+.blue {
     color: #5398ff;
 }
 

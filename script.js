@@ -108,12 +108,18 @@ const generateLink = (mode) => {
             alert("Failed to compress data: " + err);
             return;
         }
-        const url = buildUrl(base64, mode);
-        statsEl.innerHTML = `Data length: ${data.length} |  Link length: ${url.length} | Compression ratio: ${Math.round(
-            (100 * url.length) / data.length
-        )}%`;
+        const sd = new Promise((resolve, reject) => {
+            const url = buildUrl(base64, mode);
+            if (!url) return;
+            return resolve(url);
+        });
+        sd.then((d) => {
+            statsEl.innerText = `Data length: ${data.length} | Link length: ${
+                d.url.length
+            } | Compression ratio: ${Math.round((100 * d.url.length) / data.length)}%`;
 
-        showCopyBar(url);
+            showCopyBar(d.data);
+        });
     });
 };
 
@@ -158,16 +164,25 @@ const openInNewTab = () => {
 };
 
 // Build a shareable URL
-const buildUrl = (rawData, mode) => {
+const buildUrl = async (rawData, mode) => {
     const base = `${location.protocol}//${location.host}${location.pathname}`;
     const query = shorten("Plain Text") === select.selected() ? "" : `?l=${encodeURIComponent(select.selected())}`;
-    const url = base + query + "&readonly#" + rawData;
-    if (mode === "markdown") return `[AyTeaCode snippet](${url})`;
+    const url = `${base}${query ? `${query}&readonly#` : "?readonly#"}${rawData}`;
+    let data = await fetch("https://api.aytea.tk/shorten", {
+        method: "POST",
+        body: JSON.stringify({ url }),
+        headers: { "content-type": "application/json" },
+    }).then((res) => res.json());
+
+    if (mode === "markdown") return { data: `[AyTeaCode snippet](${data.shortened})`, url: data.url };
     if (mode === "iframe") {
         const height = editor["doc"].height + 45;
-        return `<iframe width="100%" height="${height}" frameborder="0" src="${url}"></iframe>`;
+        return {
+            data: `<iframe width="100%" height="${height}" frameborder="0" src="${data.shortened}"></iframe>`,
+            url: data.url,
+        };
     }
-    return url;
+    return { data: data.shortened, url: data.url };
 };
 
 // Transform a compressed base64 string into a plain text string
