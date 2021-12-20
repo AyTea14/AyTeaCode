@@ -60,11 +60,9 @@ body:not(.readonly) .show-readonly,
     box-shadow: rgba(0, 0, 0, 0.15) 0 -3px 10px;
 }
 
-@media screen and (min-width: 600px) {
-    a:focus {
-        color: #aeceff;
-        outline: none;
-    }
+a:focus {
+    color: #aeceff;
+    outline: none;
 }
 
 a,
