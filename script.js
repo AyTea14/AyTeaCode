@@ -58,7 +58,7 @@ const initLangSelector = () => {
 };
 
 const initCode = () => {
-    let base64 = location.hash.substr(1);
+    let base64 = location.hash.substring(1);
     if (base64.length === 0) {
         return;
     }
@@ -76,10 +76,10 @@ const handleLegacyUrl = () => {
     const lang = new URLSearchParams(window.location.search).get("lang");
     const base = `${location.protocol}//${location.host}`;
     if (location.hash.charAt(5) === "-") {
-        const hashedLang = location.hash.substr(1, 4);
+        const hashedLang = location.hash.substring(1, 4);
         const newLang = CodeMirror.modeInfo.find((e) => hash(e.name) === hashedLang);
         const queryParams = newLang ? "?l=" + shorten(newLang.name) : "";
-        location.replace(`${base}/${queryParams}#${location.hash.substr(6)}`);
+        location.replace(`${base}/${queryParams}#${location.hash.substring(6)}`);
         throw new Error("waiting for page to reload");
     }
     if (lang) {
@@ -210,7 +210,7 @@ const compress = (str, cb) => {
             const reader = new FileReader();
             reader.onload = () => {
                 progressBar.style.width = "0";
-                cb(reader.result.substr(reader.result.indexOf(",") + 1));
+                cb(reader.result.substring(reader.result.indexOf(",") + 1));
             };
             reader.readAsDataURL(new Blob([new Uint8Array(compressed)]));
         },
@@ -230,19 +230,19 @@ const slugify = (str) =>
 
 const shorten = (name) => {
     let n = slugify(name).replace("script", "-s").replace("python", "py");
-    const nov = (s) => s[0] + s.substr(1).replace(/[aeiouy-]/g, "");
+    const nov = (s) => s[0] + s.substring(1).replace(/[aeiouy-]/g, "");
     if (n.replace(/-/g, "").length <= 4) return n.replace(/-/g, "");
     if (n.split("-").length >= 2)
         return n
             .split("-")
-            .map((x) => nov(x.substr(0, 2)))
+            .map((x) => nov(x.substring(0, 2)))
             .join("")
-            .substr(0, 4);
+            .substring(0, 4);
 
     n = nov(n);
     if (n.length <= 4) return n;
 
-    return n.substr(0, 2) + n.substr(n.length - 2, 2);
+    return n.substring(0, 2) + n.substring(n.length - 2, 2);
 };
 
 const byId = (id) => document.getElementById(id);
@@ -259,7 +259,7 @@ const hash = function (str, seed = 0) {
     h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
     h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
     const h = 4294967296 * (2097151 & h2) + (h1 >>> 0);
-    return h.toString(36).substr(0, 4).toUpperCase();
+    return h.toString(36).substring(0, 4).toUpperCase();
 };
 
 // Only for tests purposes
